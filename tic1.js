@@ -62,6 +62,7 @@ let askForInputO = async function(){
 }
 
 let winCheck = function(array){
+    let counter = 0;
     if (array[0]==array[1] && array[1]==array[2]){
         printGrid();
         console.log('HOORAY! YOU WIN!')
@@ -94,7 +95,18 @@ let winCheck = function(array){
         printGrid();
         console.log('HOORAY! YOU WIN!')
         process.exit(); 
+}   else {for (let item of array){
+    if (item == 'X' || item == 'O'){
+        counter += 1;
+    }
+    if (counter === 9){
+        printGrid();
+        console.log("\nCAT'S GAME! Better luck next time!")
+        process.exit();
+    }
 }
+}
+
 }
 
 
