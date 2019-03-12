@@ -23,17 +23,17 @@ let printGrid = function () {
         + cells[6] + ' | ' + cells[7] + ' | ' + cells[8]))
 }
 
-let askForInput = async function () {
+let playerTurn = async function () {
     let input = await ask('\n> ');
     if (input < 1 || input > 9) {
         console.log("\nHey now Player " + player.turn + "! That's not a valid input. Please enter a number between 1 and 9!");
         printGrid();
-        askForInput();
+        playerTurn();
     }
     else if (cells[parseInt(input) - 1] == 'X' || cells[parseInt(input) - 1] == 'O') {
         console.log("\nSorry Player " + player.turn + "! That space has been claimed! Try again.");
         printGrid();
-        askForInput();
+        playerTurn();
     }
     else {
         for (let item of cells) {
@@ -46,7 +46,7 @@ let askForInput = async function () {
             }
         }
         winCheck(cells);
-        playerTurn();
+        turnStart();
     }
 }
 
@@ -98,10 +98,10 @@ let winCheck = function (array) {
     }
 }
 
-let playerTurn = async function () {
+let turnStart = async function () {
     printGrid();
     console.log("\nIt's your turn player " + player.turn + "! Please enter the number of the cell you'd like to claim!");
-    askForInput();
+    playerTurn();
 }
 
-playerTurn()
+turnStart()
