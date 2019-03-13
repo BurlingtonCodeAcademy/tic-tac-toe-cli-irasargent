@@ -24,28 +24,24 @@ let printGrid = function () {
 }
 
 let playerTurn = async function () {
-    let input = await ask('\n> ');
-    if (input < 1 || input > 9) {
-        console.log("\nHey now Player " + player.turn + "! That's not a valid input. Please enter a number between 1 and 9!");
-        printGrid();
-        playerTurn();
-    }
-    else if (cells[parseInt(input) - 1] == 'X' || cells[parseInt(input) - 1] == 'O') {
-        console.log("\nSorry Player " + player.turn + "! That space has been claimed! Try again.");
+    let input = parseInt(await ask('\n> '));
+    if (!cells.includes(input)) {
+        console.log("\nSorry Player " + player.turn + "! That's not a valid input. Please enter a number between 1 and 9 that hasn't already been taken!");
         printGrid();
         playerTurn();
     }
     else {
         for (let item of cells) {
-            if (item === parseInt(input) && player.turn === 'X') {
-                cells[parseInt(input) - 1] = 'X';
+            if (item === input && player.turn === 'X') {
+                cells[input - 1] = 'X';
+                winCheck(cells);
                 player.turn = 'O';
-            } else if (item === parseInt(input) && player.turn === 'O') {
-                cells[parseInt(input) - 1] = 'O';
+            } else if (item === input && player.turn === 'O') {
+                cells[input - 1] = 'O';
+                winCheck(cells);
                 player.turn = 'X';
             }
         }
-        winCheck(cells);
         turnStart();
     }
 }
@@ -54,35 +50,35 @@ let winCheck = function (array) {
     let counter = 0;
     if (array[0] == array[1] && array[1] == array[2]) {
         printGrid();
-        console.log('HOORAY! YOU WIN!')
+        console.log('\nCONGRATULATIONS PLAYER '+player.turn+' ! YOU WIN!')
         process.exit();
     } else if (array[3] == array[4] && array[4] == array[5]) {
         printGrid();
-        console.log('HOORAY! YOU WIN!')
+        console.log('\nCONGRATULATIONS PLAYER '+player.turn+' ! YOU WIN!')
         process.exit();
     } else if (array[6] == array[7] && array[7] == array[8]) {
         printGrid();
-        console.log('HOORAY! YOU WIN!')
+        console.log('\nCONGRATULATIONS PLAYER '+player.turn+' ! YOU WIN!')
         process.exit();
     } else if (array[0] == array[4] && array[4] == array[8]) {
         printGrid();
-        console.log('HOORAY! YOU WIN!')
+        console.log('\nCONGRATULATIONS PLAYER '+player.turn+' ! YOU WIN!')
         process.exit();
     } else if (array[2] == array[4] && array[4] == array[6]) {
         printGrid();
-        console.log('HOORAY! YOU WIN!')
+        console.log('\nCONGRATULATIONS PLAYER '+player.turn+' ! YOU WIN!')
         process.exit();
     } else if (array[0] == array[3] && array[3] == array[6]) {
         printGrid();
-        console.log('HOORAY! YOU WIN!')
+        console.log('\nCONGRATULATIONS PLAYER '+player.turn+' ! YOU WIN!')
         process.exit();
     } else if (array[1] == array[4] && array[4] == array[7]) {
         printGrid();
-        console.log('HOORAY! YOU WIN!')
+        console.log('\nCONGRATULATIONS PLAYER '+player.turn+' ! YOU WIN!')
         process.exit();
     } else if (array[2] == array[5] && array[5] == array[8]) {
         printGrid();
-        console.log('HOORAY! YOU WIN!')
+        console.log('\nCONGRATULATIONS PLAYER '+player.turn+' ! YOU WIN!')
         process.exit();
     } else {
         for (let item of array) {
@@ -99,8 +95,8 @@ let winCheck = function (array) {
 }
 
 let turnStart = async function () {
-    printGrid();
     console.log("\nIt's your turn player " + player.turn + "! Please enter the number of the cell you'd like to claim!");
+    printGrid();
     playerTurn();
 }
 
